@@ -19,7 +19,7 @@ export default function Home() {
     setResult(data.result);
     setAnimalInput("");
   }
-
+  //<div className={styles.result}>{result}</div>
   return (
     <div>
       <Head>
@@ -40,7 +40,8 @@ export default function Home() {
           />
           <input type="submit" value="Generate names" />
         </form>
-        <div className={styles.result}>{result}</div>
+
+        <img src={result}></img>
       </main>
     </div>
   );

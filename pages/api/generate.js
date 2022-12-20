@@ -7,22 +7,31 @@ const openai = new OpenAIApi(configuration);
 
 export default async function (req, res) {
   const completion = await openai.createCompletion({
-    model: "text-davinci-002",
+    model: "text-davinci-003", // text-ada-001 or text-davinci-003
     prompt: generatePrompt(req.body.animal),
-    temperature: 0.6,
+    temperature: 0.9,
+    max_tokens: 150,
+    top_p: 1,
+    frequency_penalty: 0.0,
+    presence_penalty: 0.6,
   });
   res.status(200).json({ result: completion.data.choices[0].text });
 }
 
-function generatePrompt(animal) {
-  const capitalizedAnimal =
-    animal[0].toUpperCase() + animal.slice(1).toLowerCase();
-  return `Suggest three names for an animal that is a superhero.
+//image
+// export default async function (req, res) {
+//   const completion = await openai.createImage({
+//     prompt: generatePromptImage(req.body.animal),
+//     n: 1,
+//     size: "256x256",
+//   });
+//   console.log(completion.data.data[0].url);
+//   res.status(200).json({ result: completion.data.data[0].url });
+// }
 
-Animal: Cat
-Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline
-Animal: Dog
-Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
-Animal: ${capitalizedAnimal}
-Names:`;
+function generatePrompt(animal) {
+  return `Write a passionate, considerate, solution-oritented and helpful response to this bad review I got from Håkon on Etsy: ${animal}`;
+}
+function generatePromptImage(animal) {
+  return `${animal}`;
 }
